@@ -1,0 +1,28 @@
+{
+  "name": "postgres-api-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "db-migrate-pg": "^1.5.2",
+    "dotenv": "^17.2.2",
+    "jasmine": "^5.11.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "db-migrate": "^0.11.14",
+    "nodemon": "^3.1.10",
+    "typescript": "^5.9.2",
+    "ts-node": "^10.9.2",
+    "@types/jasmine": "^5.1.9",
+    "@types/nodemon": "^1.19.6",
+    "@types/pg": "^8.15.5",
+    "@types/typescript": "^0.4.29"
+  }
+}
