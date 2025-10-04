@@ -1,23 +1,19 @@
-import { createAuthor, deleteAuthor, fetchAuthors, updateAuthorName } from "./services/authors";
-import { createGenre, deleteGenre, fetchGenres, updateGenreTitle } from "./services/genres";
-import { createBook, deleteBook, fetchBooks, updateBookTitle } from "./services/books";
-import { createBookAuthorRel, deleteBookAuthorRel, fetchBookAuthorsRel } from "./services/books-authors"
+import express from 'express';
+import cors from 'cors';
+import authorRouter from './routers/authors';
 
-// createAuthor({name: "yousef", bio: "lorem ipsum dolor"});
-// fetchAuthors();
-// updateAuthorName({id: 1, name:"omar"})
-// deleteAuthor(3)
+const app = express();
+const port = 3001;
 
-// createGenre({title: "fiction", description: "stories, novels..."})
-// fetchGenres();
-// updateGenreTitle({id: 1, name: "fiction - updated"})
-// deleteGenre(2)
+app.use(cors());
+app.use(express.json());
+app.use("/authors", authorRouter)
 
-// createBook({title: "harry potter and the philosophers stone", description: "first book in the series", genreId: 1, isbn: '3234567890123'})
-// fetchBooks()
-// updateBookTitle({id: 2, title: 'harry potter - Updated'})
-// deleteBook(7)
+app.get("/", (req: express.Request, res: express.Response) => {
+  console.log("hello")
+  res.send("hello")
+})
 
-// createBookAuthorRel({authorId: 1, bookId: 2, isMainAuthor: true})
-// fetchBookAuthorsRel()
-// deleteBookAuthorRel({authorId: 1, bookId: 2})
+app.listen(port, () => {
+  console.log("listening on port 3001")
+})
