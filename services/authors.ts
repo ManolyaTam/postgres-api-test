@@ -10,7 +10,7 @@ export const createAuthor = async (author: TAuthor) => {
   connection.query(`
     INSERT INTO authors(name, bio)
     VALUES('${author.name}', '${author.bio}');
-    `)
+  `)
     .then(() => {
       connection.release();
       console.log("author created")
@@ -21,8 +21,8 @@ export const createAuthor = async (author: TAuthor) => {
 export const fetchAuthors = async () => {
   const connection = await client.connect();
   connection.query(`
-      SELECT * FROM authors;
-      `)
+    SELECT * FROM authors;
+  `)
     .then((data) => {
       console.log(data.rows)
       connection.release();
@@ -30,26 +30,26 @@ export const fetchAuthors = async () => {
     .catch((err) => { console.error("ERR while fetching authors", err) })
 }
 
-export const updateAuthorName = async ({name, id}: {name: string, id: number}) => {
+export const updateAuthorName = async ({ name, id }: { name: string, id: number }) => {
   const connection = await client.connect();
   connection.query(`
-      UPDATE authors
-      SET name='${name}'
-      WHERE id=${id};
-      `)
+    UPDATE authors
+    SET name='${name}'
+    WHERE id=${id};
+  `)
     .then(() => {
       console.log('author name updated')
       connection.release();
     })
     .catch((err) => { console.error("ERR while updating author name", err) })
-} 
+}
 
-export const deleteAuthor = async (id:number) => {
+export const deleteAuthor = async (id: number) => {
   const connection = await client.connect();
   connection.query(`
-      DELETE from authors
-      WHERE id=${id};
-      `)
+    DELETE from authors
+    WHERE id=${id};
+    `)
     .then(() => {
       console.log('author deleted')
       connection.release();
