@@ -52,9 +52,12 @@ export const deleteAuthor = async (id: number) => {
     DELETE from authors
     WHERE id=${id};
     `)
-    .then(() => {
-      console.log('author deleted')
-      connection.release();
+    .then((res) => {
+      if(!res.rowCount){
+        throw new Error("author was not found")
+      }
+      else return true;
     })
     .catch((err) => { throw new Error("ERR while deleting author", err) })
+    .finally(() => {connection.release()})
 } 

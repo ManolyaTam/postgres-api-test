@@ -1,5 +1,6 @@
 import express from 'express';
 import { createAuthor, deleteAuthor, fetchAuthors, updateAuthorName } from '../services/authors';
+import { loginCheck } from '../middleware/loginCheck';
 
 type TAuthor = {
   name: string,
@@ -14,7 +15,7 @@ router.get('/', async (req: express.Request, res: express.Response) => {
   })
 })
 
-router.post('/new', (req: express.Request, res: express.Response) => {
+router.post('/new', loginCheck, (req: express.Request, res: express.Response) => {
   const author: TAuthor = req.body;
   createAuthor(author)
     .then(() => {
@@ -25,7 +26,7 @@ router.post('/new', (req: express.Request, res: express.Response) => {
     })
 })
 
-router.delete('/', (req: express.Request, res: express.Response) => {
+router.delete('/', loginCheck, (req: express.Request, res: express.Response) => {
   const { id } = req.query
   console.log("id", id)
   if (!id) return res.status(400).send("id required!");
@@ -38,7 +39,7 @@ router.delete('/', (req: express.Request, res: express.Response) => {
   })
 })
 
-router.post('/:id', (req: express.Request, res: express.Response) => {
+router.post('/:id', loginCheck, (req: express.Request, res: express.Response) => {
   const { name } = req.query
   const { id } = req.params
 

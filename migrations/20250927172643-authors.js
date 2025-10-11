@@ -19,17 +19,30 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  var filePath = path.join(__dirname, 'sqls', '20250927172643-authors-up.sql');
-  return new Promise( function( resolve, reject ) {
-    fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
-      if (err) return reject(err);
-      console.log('received data: ' + data);
+  var migrationPath = path.join(__dirname, 'sqls', '20250927172643-authors-up.sql');
+  var seedPath = path.join(__dirname, 'sqls', '20250927172643-authors-seed.sql');
 
-      resolve(data);
+  // Run migration first
+  return new Promise(function(resolve, reject) {
+    fs.readFile(migrationPath, {encoding: 'utf-8'}, function(err, migrationSql) {
+      if (err) return reject(err);
+      resolve(migrationSql);
     });
   })
-  .then(function(data) {
-    return db.runSql(data);
+  .then(function(migrationSql) {
+    return db.runSql(migrationSql);
+  })
+  // Then run seed
+  .then(function() {
+    return new Promise(function(resolve, reject) {
+      fs.readFile(seedPath, {encoding: 'utf-8'}, function(err, seedSql) {
+        if (err) return reject(err);
+        resolve(seedSql);
+      });
+    });
+  })
+  .then(function(seedSql) {
+    return db.runSql(seedSql);
   });
 };
 
